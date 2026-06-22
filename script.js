@@ -11,6 +11,10 @@ let lastTime = performance.now();
 
 let dragging = false;
 
+document.body.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+}, { passive: false });
+
 canvas.addEventListener("pointerdown", (e)=> {
 x = e.clientX;
 y = e.clientY;
