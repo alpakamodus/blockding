@@ -9,9 +9,21 @@ let y = canvas.height/2-canvas.height/4;
 
 let lastTime = performance.now();
 
+let dragging = false;
+
 canvas.addEventListener("pointerdown", (e)=> {
 x = e.clientX;
 y = e.clientY;
+dragging = true;
+});
+canvas.addEventListener("pointerup", (e) => {
+    dragging = false;
+})
+canvas.addEventListener("pointermove", (e)=> {
+    if(dragging == true){
+        x = e.clientX;
+        y = e.clientY;
+    }
 });
 
 function gameLoop(){
@@ -29,7 +41,7 @@ function update(dt){
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillRect(x,y,canvas.width/2,canvas.height/2);
+    ctx.fillRect(x-canvas.width/8,y-canvas.height/8,canvas.width/4,canvas.height/4);
 }
 
 gameLoop();
