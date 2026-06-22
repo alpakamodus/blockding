@@ -15,6 +15,7 @@ canvas.addEventListener("pointerdown", (e)=> {
 x = e.clientX;
 y = e.clientY;
 dragging = true;
+canvas.setPointerCapture(e.pointerId);
 });
 canvas.addEventListener("pointerup", (e) => {
     dragging = false;
@@ -41,7 +42,7 @@ function update(dt){
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillRect(x-canvas.width/8,y-canvas.height/8,canvas.width/4,canvas.height/4);
+    ctx.fillRect(x-canvas.width/8,y-canvas.width/8,canvas.width/4,canvas.width/4);
 }
 
 gameLoop();
