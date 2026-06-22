@@ -13,16 +13,13 @@ canvas.addEventListener("pointerdown", (e)=> {
 x = e.clientX;
 y = e.clientY;
 });
-while(1){
-    setInterval(gameLoop, 4);
-}
+
 function gameLoop(){
     currentTime = performance.now();
     dt = (currentTime - lastTime) / 16.6667;
     lastTime = currentTime;
     update(dt);
     draw();
-    requestAnimationFrame(gameLoop());
 }
 
 function update(dt){
@@ -33,3 +30,5 @@ function draw(){
 
     ctx.fillRect(canvas.width/2-canvas.width/4,canvas.height/2-canvas.height/4,canvas.width/2,canvas.height/2);
 }
+
+setInterval(gameLoop, 4);
