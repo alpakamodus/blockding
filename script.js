@@ -49,7 +49,7 @@ function update(dt){
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillRect(canvas.width/2-boardSize/2,canvas.height/2-boardSize/2-boardSize/4,canvas.width/4,canvas.width/4);
+    ctx.fillRect(canvas.width/2-boardSize/2,canvas.height/2-boardSize/2-boardSize/4,boardSize,boardSize);
 }
 
 gameLoop();
