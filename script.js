@@ -14,10 +14,10 @@ const boardY = canvas.height/2-boardSize/2-boardSize/4;
 const board2X = boardX;
 const board2Y = boardY+boardSize+boardSize/10;
 
-const blockX = board2Y+boardSize/3/2;
-const block1Y = board2X+boardSize/4;
-const block2Y = board2X+boardSize/4*2;
-const block3Y = board2X+boardSize/4*3;
+const blockY = board2Y+boardSize/3/2;
+const block1X = board2X+boardSize/4*1;
+const block2X = board2X+boardSize/4*2;
+const block3X = board2X+boardSize/4*3;
 
 let lastTime = performance.now();
 
@@ -58,11 +58,12 @@ function update(dt){
 }
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
+    //playing board outline
     ctx.strokeStyle = "rgba(0, 0, 0, 1)";
     ctx.lineWidth = 5;
     ctx.strokeRect(boardX,boardY,boardSize,boardSize);
 
+    //playing board karo
     ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
     ctx.lineWidth = 1;
     for(let i = 1; i < 8; i++){
@@ -76,9 +77,14 @@ function draw(){
         ctx.lineTo(boardX+boardSize, boardY+boardSize/8*i); // Endpunkt
         ctx.stroke();
     }
+    //2nd board outline
     ctx.strokeStyle = "rgba(0, 0, 0, 1)";
     ctx.lineWidth = 2;
     ctx.strokeRect(board2X,board2Y,boardSize,boardSize/3);
+
+    ctx.fillRect(block1X-boardSize/6/2,blockYboardSize/6/2,boardSize/6,boardSize/6);
+    ctx.fillRect(block2X-boardSize/6/2,blockYboardSize/6/2,boardSize/6,boardSize/6);
+    ctx.fillRect(block3X-boardSize/6/2,blockYboardSize/6/2,boardSize/6,boardSize/6);
 }
 
 gameLoop();
