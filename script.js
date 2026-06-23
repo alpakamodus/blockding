@@ -93,7 +93,7 @@ function draw(){
 
     for(let i = 0; i < blocks.length;i++){
         if(blocks[i].placed == false){
-            ctx.strokeRect(blocks[i].x-boardSize/2,blocks[i].y-boardSize/2,blockSize,blockSize);
+            ctx.strokeRect(blocks[i].x-blockSize/2,blocks[i].y-blockSize/2,blockSize,blockSize);
         }
     }
 }
