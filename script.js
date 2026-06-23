@@ -45,8 +45,8 @@ canvas.addEventListener("pointermove", (e)=> {
 });
 
 function gameLoop(){
-    currentTime = performance.now();
-    dt = (currentTime - lastTime) / 16.6667;
+    let currentTime = performance.now();
+    let dt = (currentTime - lastTime) / 16.6667;
     lastTime = currentTime;
     update(dt);
     draw();
