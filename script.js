@@ -91,9 +91,9 @@ function draw(){
     ctx.lineWidth = 2;
     ctx.strokeRect(board2X,board2Y,boardSize,boardSize/3);
 
-    for(let i = 0; i < blockSize.length;i++){
+    for(let i = 0; i < blocks.length;i++){
         if(blocks[i].placed == false){
-            ctx.strokeRect(blocks[i].x-boardSize/6/2,blocks[i].y-boardSize/6/2,blockSize,blockSize);
+            ctx.strokeRect(blocks[i].x-boardSize/2,blocks[i].y-boardSize/2,blockSize,blockSize);
         }
     }
 }
