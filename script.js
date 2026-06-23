@@ -30,12 +30,12 @@ document.body.addEventListener("touchmove", (e) => {
 }, { passive: false });
 
 canvas.addEventListener("pointerdown", (e)=> {
-/*blocks.forEach(b => {
+/**blocks.forEach(b => {
     if(e.clientX >= b.x-blockSize/2 && e.clientX <= b.x+blockSize/2 && e.clientY >= b.y-blockSize/2 && e.clientY <= b.y+blockSize/2){
 b.x = e.clientX;
 b.y = e.clientY;
 }
-});*/
+});**/
 dragging = true;
 canvas.setPointerCapture(e.pointerId);
 });
