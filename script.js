@@ -103,7 +103,7 @@ function gameLoop(){
     let dt = (currentTime - lastTime) / 16.6667;
     lastTime = currentTime;
     update(dt);
-    draw();
+    //draw();
     requestAnimationFrame(gameLoop);
 }
 
