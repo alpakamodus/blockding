@@ -19,6 +19,8 @@ const block1X = board2X+boardSize/4*1;
 const block2X = board2X+boardSize/4*2;
 const block3X = board2X+boardSize/4*3;
 
+const blockSize = boardSize/8;
+
 let lastTime = performance.now();
 
 let dragging = false;
@@ -68,13 +70,13 @@ function draw(){
     ctx.lineWidth = 1;
     for(let i = 1; i < 8; i++){
         ctx.beginPath();
-        ctx.moveTo(boardX+boardSize/8*i, boardY);   // Startpunkt
-        ctx.lineTo(boardX+boardSize/8*i, boardY+boardSize); // Endpunkt
+        ctx.moveTo(boardX+blockSize*i, boardY);   // Startpunkt
+        ctx.lineTo(boardX+blockSize*i, boardY+boardSize); // Endpunkt
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(boardX, boardY+boardSize/8*i);   // Startpunkt
-        ctx.lineTo(boardX+boardSize, boardY+boardSize/8*i); // Endpunkt
+        ctx.moveTo(boardX, boardY+blockSize*i);   // Startpunkt
+        ctx.lineTo(boardX+boardSize, boardY+blockSize*i); // Endpunkt
         ctx.stroke();
     }
     //2nd board outline
