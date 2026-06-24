@@ -26,16 +26,22 @@ let lastTime = performance.now();
 let dragging = false;
 
 const blocks = [{
+    homeX: block1X,
+    homeY: blockY,
     x: block1X,
     y: blockY,
     placed: false,
 },
 {
+homeX: block2X,
+    homeY: blockY,
     x: block2X,
     y: blockY,
     placed: false,
 },
 {
+homeX: block3X,
+    homeY: blockY,
     x: block3X,
     y: blockY,
     placed: false,
@@ -88,6 +94,8 @@ return true;
 }
 }
 }
+b.x = b.homeX;
+b.y = b.homeY;
 return false;
 }
 
