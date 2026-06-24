@@ -87,8 +87,6 @@ function checkForSnap(b){
 for (let y = 0; y < 8; y++) {
   for (let x = 0; x < 8; x++) {
     if(Math.abs(b.x-(boardX+(x*blockSize+blockSize/2)))<=blockSize/2.1 && Math.abs(b.y-(boardY+(y*blockSize+blockSize/2)))<=blockSize/2.1){
-b.x = boardX+x*blockSize+blockSize/2;
-b.y = boardY+y*blockSize+blockSize/2;
 grid[y][x] = true;
 return true;
 }
@@ -127,6 +125,14 @@ function draw(){
     ctx.strokeStyle = "rgba(0, 0, 0, 1)";
     ctx.lineWidth = 2;
     ctx.strokeRect(board2X,board2Y,boardSize,boardSize/3);
+
+for (let y = 0; y < 8; y++) {
+  for (let x = 0; x < 8; x++) {
+if(grid[y][x] == true){
+ctx.strokeRect(boardX+x*blockSize-blockSize/2,boardX+x*blockSize-blockSize/2,blockSize,blockSize)
+}
+}
+}
 
     for(let i = 0; i < blocks.length;i++){
             ctx.strokeRect(blocks[i].x-blockSize/2,blocks[i].y-blockSize/2,blockSize,blockSize);
