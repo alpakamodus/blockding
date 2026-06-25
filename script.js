@@ -193,14 +193,13 @@ function checkForSnap(b) {
         Math.abs(b.x - (boardX + (x * blockSize + blockSize / 2))) <=
           blockSize / 2.1 &&
         Math.abs(b.y - (boardY + (y * blockSize + blockSize / 2))) <=
-          blockSize / 2.1 &&
-        !grid[y][x]
+          blockSize / 2.1
       ) {
         b.x = b.homeX;
         b.y = b.homeY;
-        for (let h = 0; h < blockLib[b.Id].length; h++) {
-          for (let w = 0; w < blockLib[b.Id][0].length; w++) {
-            if(blockLib[b.Id][h][w]){
+        for (let h = 0; h < blockLib[b.Id].length && y+h < 8; h++) {
+          for (let w = 0; w < blockLib[b.Id][0].length && x+w < 8; w++) {
+            if(blockLib[b.Id][h][w] == true && grid[y+h][x+w] == false){
                 grid[y+h][x+w] = true;
             }
           }
