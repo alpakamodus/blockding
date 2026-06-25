@@ -198,7 +198,7 @@ function checkForSnap(b) {
       if (
         Math.abs((b.x-b.Width/2) - (boardX + (x * blockSize + blockSize / 2))) <=
           blockSize / 2.1 &&
-        Math.abs(b.y-b.Height/2) - (boardY + (y * blockSize + blockSize / 2))) <=
+        Math.abs((b.y-b.Height/2) - (boardY + (y * blockSize + blockSize / 2))) <=
           blockSize / 2.1
       ) {
         if (checkIfFree(b, x, y)) {
