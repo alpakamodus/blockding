@@ -196,9 +196,13 @@ function checkForSnap(b) {
   for (let y = 0; y < 8; y++) {
     for (let x = 0; x < 8; x++) {
       if (
-        Math.abs((b.x-b.Width/2) - (boardX + (x * blockSize + blockSize / 2))) <=
+        Math.abs(
+          b.x - b.Width / 2 - (boardX + (x * blockSize + blockSize / 2)),
+        ) <=
           blockSize / 2.1 &&
-        Math.abs((b.y-b.Height/2) - (boardY + (y * blockSize + blockSize / 2))) <=
+        Math.abs(
+          b.y - b.Height / 2 - (boardY + (y * blockSize + blockSize / 2)),
+        ) <=
           blockSize / 2.1
       ) {
         if (checkIfFree(b, x, y)) {
@@ -291,14 +295,8 @@ function draw() {
       for (let h = 0; h < blockLib[b.Id].length; h++) {
         for (let w = 0; w < blockLib[b.Id][0].length; w++) {
           if (blockLib[b.Id][h][w] == true) {
-            let y =
-              b.y -
-              (blockSize / 2) * blockLib[b.Id].length +
-              (blockSize ) * h;
-            let x =
-              b.x -
-              (blockSize / 2) * blockLib[b.Id][0].length +
-              (blockSize ) * w;
+            let y = b.x - b.Width / 2 + h * blockSize;
+            let x = b.x - b.Width / 2 + w * blockSize;
             ctx.fillRect(x, y, blockSize, blockSize);
           }
         }
