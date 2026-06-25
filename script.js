@@ -196,23 +196,23 @@ function checkForSnap(b) {
   for (let y = 0; y < 8; y++) {
     for (let x = 0; x < 8; x++) {
       if (
-        Math.abs(b.x - (boardX + (x * blockSize + blockSize / 2))) <=
+        Math.abs((b.x-b.Width/2) - (boardX + (x * blockSize + blockSize / 2))) <=
           blockSize / 2.1 &&
-        Math.abs(b.y - (boardY + (y * blockSize + blockSize / 2))) <=
+        Math.abs(b.y-b.Height/2) - (boardY + (y * blockSize + blockSize / 2))) <=
           blockSize / 2.1
       ) {
         if (checkIfFree(b, x, y)) {
           for (let h = 0; h < blockLib[b.Id].length && y + h < 8; h++) {
             for (let w = 0; w < blockLib[b.Id][0].length && x + w < 8; w++) {
               if (blockLib[b.Id][h][w] == true) {
-                grid[y+h][x+w] = true;
+                grid[y + h][x + w] = true;
               }
             }
           }
-        b.x = b.homeX;
-        b.y = b.homeY;
-        placeCount++;
-        return true;
+          b.x = b.homeX;
+          b.y = b.homeY;
+          placeCount++;
+          return true;
         }
       }
     }
