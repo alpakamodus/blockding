@@ -330,12 +330,12 @@ function draw() {
     }
   }
   blocks.forEach((b) => {
-    if (b.placed == false) {
+    if (b.placed == false && !dragging) {
       for (let h = 0; h < blockLib[b.Id].length; h++) {
         for (let w = 0; w < blockLib[b.Id][0].length; w++) {
           if (blockLib[b.Id][h][w] == true) {
-            let y = b.y - b.Height / 4 + (h * blockSize) / 2;
-            let x = b.x - b.Width / 4 + (w * blockSize) / 2;
+            let y = b.y - b.Height / 4 + h * (blockSize / 2);
+            let x = b.x - b.Width / 4 + w * (blockSize / 2);
             ctx.fillRect(x, y, blockSize / 2, blockSize / 2);
           }
         }
