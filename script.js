@@ -309,10 +309,18 @@ function draw() {
 
   //blocks
   ctx.fillStyle = "rgba(0, 0, 0, 1)";
+  ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+  ctx.lineWidth = 2;
   for (let y = 0; y < 8; y++) {
     for (let x = 0; x < 8; x++) {
       if (grid[y][x] == true) {
         ctx.fillRect(
+          boardX + x * blockSize,
+          boardY + y * blockSize,
+          blockSize,
+          blockSize,
+        );
+        ctx.strokeRect(
           boardX + x * blockSize,
           boardY + y * blockSize,
           blockSize,
@@ -326,9 +334,9 @@ function draw() {
       for (let h = 0; h < blockLib[b.Id].length; h++) {
         for (let w = 0; w < blockLib[b.Id][0].length; w++) {
           if (blockLib[b.Id][h][w] == true) {
-            let y = b.y - b.Height / 2 + h * blockSize;
-            let x = b.x - b.Width / 2 + w * blockSize;
-            ctx.fillRect(x, y, blockSize, blockSize);
+            let y = b.y - b.Height / 4 + (h * blockSize) / 2;
+            let x = b.x - b.Width / 4 + (w * blockSize) / 2;
+            ctx.fillRect(x, y, blockSize / 2, blockSize / 2);
           }
         }
       }
