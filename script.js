@@ -153,9 +153,9 @@ canvas.addEventListener("pointerdown", (e) => {
       selected == null
     ) {
       selected = b;
+dragging = true;
     }
-  });
-  dragging = true;
+  });
   canvas.setPointerCapture(e.pointerId);
 });
 canvas.addEventListener("pointerup", (e) => {
