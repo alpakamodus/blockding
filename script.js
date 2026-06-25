@@ -339,7 +339,7 @@ function draw() {
           }
         }
       }
-    } else if (dragging) {
+    } else if (b.placed == false && dragging) {
       for (let h = 0; h < blockLib[b.Id].length; h++) {
         for (let w = 0; w < blockLib[b.Id][0].length; w++) {
           if (blockLib[b.Id][h][w] == true) {
