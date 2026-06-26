@@ -7,6 +7,10 @@ canvas.height = window.innerHeight;
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 
+if (localStorage.getItem("highscore") == null) {
+    localStorage.setItem("highscore", "0");
+}
+
 let x = canvas.width / 2 - canvas.width / 4;
 let y = canvas.height / 2 - canvas.height / 4;
 
@@ -152,6 +156,19 @@ const buttons = [
             placeCount = 0;
         },
         State: 2,
+    },
+    {
+        displayText: "Rewards",
+        color: "gold",
+        font: "50px Arial",
+        x: canvas.width / 2 - boardSize / 2,
+        y: canvas.height / 2 - boardSize / 8,
+        w: boardSize,
+        h: boardSize / 4,
+        action: function () {
+            state = 3;
+        },
+        State: 0,
     },
 ];
 
@@ -401,6 +418,9 @@ function update(dt) {
         clearRows();
         clearCols();
         if (checkLoose()) {
+            if (score > localStorage.getItem("highscore")) {
+                localStorage.setItem("highscore", score);
+            }
             state = 2;
         }
 
@@ -526,6 +546,65 @@ function draw() {
         ctx.font = "30px Arial";
         ctx.fillText("Score: " + score, canvas.width / 2, buttons[0].y - buttons[0].y / 2);
         ctx.fillText("Highscore: " + score, canvas.width / 2, buttons[0].y - buttons[0].y / 4);
+    }
+    else if (state == 3) {
+        const rewards = [
+            { score: 5, text: "🥉 Beginner - 5 Punkte" },
+            { score: 15, text: "🥈 Amateur - 15 Punkte" },
+            { score: 30, text: "🥇 Profi - 30 Punkte" },
+            { score: 60, text: "💎 Meister - 60 Punkte" },
+            { score: 100, text: "👑 Legende - 100 Punkte" }
+        ];
+
+        const highscore = Number(localStorage.getItem("highscore"));
+
+        const centerX = canvas.width / 2;
+        const startY = canvas.height * 0.15;
+        const rowH = canvas.height * 0.12;
+        const boxW = canvas.width * 0.85;
+        const boxH = canvas.height * 0.08;
+
+        ctx.fillStyle = "black";
+        ctx.font = `${canvas.height * 0.06}px Arial`;
+        ctx.fillText("Rewards", centerX, canvas.height * 0.07);
+
+        for (let i = 0; i < rewards.length; i++) {
+            const y = startY + i * rowH;
+
+            // Box
+            ctx.beginPath();
+            ctx.roundRect(
+                centerX - boxW / 2,
+                y - boxH / 2,
+                boxW,
+                boxH,
+                canvas.height * 0.02
+            );
+
+            if (highscore >= rewards[i].score) {
+                ctx.fillStyle = "limegreen";
+            } else {
+                ctx.fillStyle = "#cccccc";
+            }
+
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = canvas.width * 0.003;
+            ctx.stroke();
+
+            // Text
+            ctx.fillStyle = "black";
+            ctx.font = `${canvas.height * 0.035}px Arial`;
+            ctx.fillText(rewards[i].text, centerX, y);
+        }
+
+        // Highscore unten
+        ctx.font = `${canvas.height * 0.04}px Arial`;
+        ctx.fillText(
+            "Highscore: " + highscore,
+            centerX,
+            canvas.height * 0.93
+        );
     }
 }
 
