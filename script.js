@@ -162,13 +162,26 @@ const buttons = [
         color: "gold",
         font: "50px Arial",
         x: canvas.width / 2 - boardSize / 2,
-        y: canvas.height / 2 + boardSize / 4,
+        y: canvas.height / 2 + boardSize / 8,
         w: boardSize,
         h: boardSize / 4,
         action: function () {
             state = 3;
         },
         State: 0,
+    },
+    {
+        displayText: "Return",
+        color: "gray",
+        font: "50px Arial",
+        x: canvas.width / 2 - boardSize / 4,
+        y: canvas.height * 0.85,
+        w: boardSize / 2,
+        h: canvas.height * 0.08,
+        action: function () {
+            state = 0;
+        },
+        State: 3,
     },
 ];
 
@@ -237,7 +250,7 @@ canvas.addEventListener("pointerdown", (e) => {
         });
         canvas.setPointerCapture(e.pointerId);
     }
-    else if (state == 0 || state == 2) {
+    else if (state == 0 || state == 2 || state == 3) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
@@ -435,6 +448,14 @@ function update(dt) {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (state == 1) {
+        ctx.fillStyle = "black";
+        ctx.font = `${canvas.height * 0.04}px Arial`;
+
+        ctx.fillText(
+            "Score: " + score,
+            canvas.width / 2,
+            boardY - canvas.height * 0.03
+        );
         //playing board outline
         ctx.strokeStyle = "rgba(0, 0, 0, 1)";
         ctx.lineWidth = 5;
