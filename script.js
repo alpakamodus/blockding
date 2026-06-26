@@ -28,6 +28,8 @@ let placeCount = 0;
 
 let state = 0;
 
+let score = 0;
+
 let lastTime = performance.now();
 
 let dragging = false;
@@ -109,8 +111,8 @@ const blockLib = [
 const buttons = [
     {
         displayText: "Start",
-        color: "blue",
-        font: "40px Arial",
+        color: "light blue",
+        font: "60px Arial",
         x: canvas.width / 2 - boardSize / 2,
         y: canvas.height / 2 - boardSize / 4,
         w: boardSize,
@@ -119,7 +121,21 @@ const buttons = [
             state = 1;
         },
         State: 0,
-    }
+    },
+    {
+        displayText: "Home",
+        color: "light blue",
+        font: "60px Arial",
+        x: canvas.width / 2 - boardSize / 2,
+        y: canvas.height / 2 - boardSize / 4,
+        w: boardSize,
+        h: boardSize / 2,
+        action: function () {
+            state = 0;
+            score = 0;
+        },
+        State: 2,
+    },
 ];
 
 
@@ -293,6 +309,7 @@ function clearRows() {
             for (let x = 0; x < 8; x++) {
                 grid[y][x] = 0;
             }
+            score++;
         }
     }
 }
@@ -312,6 +329,7 @@ function clearCols() {
             for (let y = 0; y < 8; y++) {
                 grid[y][x] = 0;
             }
+            score++;
         }
     }
 }
@@ -366,17 +384,20 @@ function update(dt) {
         clearRows();
         clearCols();
         if (checkLoose()) {
-            state = 0;
+            state = 2;
         }
 
     }
     else if (state == 0) {
 
     }
+    else if (state == 2) {
+
+    }
 }
 function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (state == 1) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         //playing board outline
         ctx.strokeStyle = "rgba(0, 0, 0, 1)";
         ctx.lineWidth = 5;
@@ -451,7 +472,6 @@ function draw() {
         });
     }
     else if (state == 0) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         buttons.forEach((but) => {
             if (but.State == 0) {
                 ctx.beginPath();
@@ -468,6 +488,27 @@ function draw() {
                 ctx.fillText(but.displayText, but.x + but.w / 2, but.y + but.h / 2 + 2);
             }
         });
+    }
+    else if (state == 2) {
+        buttons.forEach((but) => {
+            if (but.State == 2) {
+                ctx.beginPath();
+                ctx.roundRect(but.x, but.y, but.w, but.h, 20);
+                ctx.fillStyle = "black";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.fillStyle = but.color;
+                ctx.fill();
+
+                ctx.fillStyle = "black";
+                ctx.font = but.font;
+
+                ctx.fillText(but.displayText, but.x + but.w / 2, but.y + but.h / 2 + 2);
+            }
+        });
+        ctx.font = "30px";
+        ctx.fillText("Score: " + score, buttons[0].x - buttons[0].x / 2, buttons[0].y - buttons[0].y / 2);
+        ctx.fillText("Highscore: " + score, buttons[0].x - buttons[0].x / 4, buttons[0].y - buttons[0].y / 4);
     }
 }
 
