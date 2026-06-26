@@ -431,6 +431,7 @@ function draw() {
         });
     }
     else if (state == 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         buttons.forEach((but) => {
             if (but.State == 0) {
                 ctx.beginPath();
