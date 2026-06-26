@@ -205,6 +205,8 @@ canvas.addEventListener("pointerdown", (e) => {
     }
 });
 canvas.addEventListener("pointerup", (e) => {
+    if (!selected) return;
+
     canvas.releasePointerCapture(e.pointerId);
     dragging = false;
     let b = selected;
@@ -330,8 +332,10 @@ function getShape(id, rotation, mirrored) {
     return shape;
 }
 
-function checkLoose(b) {
-    blocks.forEach((b) => {
+function checkLoose() {
+    for (const b of blocks) {
+        if (b.placed) continue;
+
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
                 if (checkIfFree(b, x, y)) {
@@ -339,7 +343,7 @@ function checkLoose(b) {
                 }
             }
         }
-    });
+    }
     return true;
 }
 
@@ -361,7 +365,7 @@ function update(dt) {
         }
         clearRows();
         clearCols();
-        if (checkLoose(b)) {
+        if (checkLoose()) {
             state = 0;
         }
 
