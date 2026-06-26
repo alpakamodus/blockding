@@ -162,7 +162,7 @@ const buttons = [
         color: "gold",
         font: "50px Arial",
         x: canvas.width / 2 - boardSize / 2,
-        y: canvas.height / 2 - boardSize / 8,
+        y: canvas.height / 2 + boardSize / 8,
         w: boardSize,
         h: boardSize / 4,
         action: function () {
