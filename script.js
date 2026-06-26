@@ -109,6 +109,8 @@ x: block1X,
 y: blockY,
 placed: false,
 Id: 0,
+rotation: 0,
+mirrored: false,
 Height: blockSize,
 Width: blockSize,
 },
@@ -119,6 +121,8 @@ x: block2X,
 y: blockY,
 placed: false,
 Id: 0,
+rotation: 0,
+mirrored: false,
 Height: blockSize,
 Width: blockSize,
 },
@@ -129,6 +133,8 @@ x: block3X,
 y: blockY,
 placed: false,
 Id: 0,
+rotation: 0,
+mirrored: false,
 Height: blockSize,
 Width: blockSize,
 },
@@ -194,9 +200,10 @@ Math.abs(b.y - b.Height / 2 - (boardY + y * blockSize)) <=
 blockSize / 2.1
 ) {
 if (checkIfFree(b, x, y)) {
-for (let h = 0; h < blockLib[b.Id].length; h++) {
-for (let w = 0; w < blockLib[b.Id][0].length; w++) {
-if (blockLib[b.Id][h][w] == true) {
+const shape = getShape(b.Id,b.rotation,mirrored);
+for (let h = 0; h < shape.length; h++) {
+for (let w = 0; w < shape[0].length; w++) {
+if (shape[h][w] == true) {
 grid[y + h][x + w] = true;
 }
 }
@@ -215,12 +222,13 @@ return false;
 }
 
 function checkIfFree(b, x, y) {
-if (y + blockLib[b.Id].length > 8 || x + blockLib[b.Id][0].length > 8) {
+const shape = getShape(b.Id,b.rotation,mirrored);
+if (y + shape.length > 8 || x + shape[0].length > 8) {
 return false;
 }
-for (let h = 0; h < blockLib[b.Id].length; h++) {
-for (let w = 0; w < blockLib[b.Id][0].length; w++) {
-if (blockLib[b.Id][h][w] == true && grid[y + h][x + w] == true) {
+for (let h = 0; h < shape.length; h++) {
+for (let w = 0; w < shape[0].length; w++) {
+if (shape[h][w] == true && grid[y + h][x + w] == true) {
 return false;
 }
 }
@@ -266,6 +274,22 @@ grid[y][x] = 0;
 }
 }
 
+function getShape(id, rotation, mirrored) {
+  let shape = blockLib[id].map(r => [...r]);
+
+  if (mirrored) {
+    shape = shape.map(r => r.reverse());
+  }
+
+  for (let i = 0; i < rotation; i++) {
+    shape = shape[0].map((_, c) =>
+      shape.map(r => r[c]).reverse()
+    );
+  }
+
+  return shape;
+}
+
 function update(dt) {
 if (placeCount >= 3) {
 blocks.forEach((b) => {
@@ -273,8 +297,11 @@ b.x = b.homeX;
 b.y = b.homeY;
 b.placed = false;
 b.Id = Math.floor(Math.random() * blockLib.length);
-b.Height = blockLib[b.Id].length * blockSize;
-b.Width = blockLib[b.Id][0].length * blockSize;
+b.mirrored = Math.floor(Math.random() * 2);
+b.rotation = Math.floor(Math.random() * 4);
+const shape = getShape(b.Id,b.rotation,b.mirrored);
+b.Height = shape.length * blockSize;
+b.Width = shape[0].length * blockSize;
 });
 placeCount = 0;
 }
@@ -330,10 +357,11 @@ blockSize,
 }
 }
 blocks.forEach((b) => {
+const shape = getShape(b.Id,b.rotation,b.mirrored);
 if (b.placed == false && (!dragging || b != selected)) {
-for (let h = 0; h < blockLib[b.Id].length; h++) {
-for (let w = 0; w < blockLib[b.Id][0].length; w++) {
-if (blockLib[b.Id][h][w] == true) {
+for (let h = 0; h < shape.length; h++) {
+for (let w = 0; w < shape[0].length; w++) {
+if (shape[h][w] == true) {
 let y = b.y - b.Height / 4 + h * (blockSize / 2);
 let x = b.x - b.Width / 4 + w * (blockSize / 2);
 ctx.fillRect(x, y, blockSize / 2, blockSize / 2);
@@ -342,9 +370,9 @@ ctx.strokeRect(x, y, blockSize / 2, blockSize / 2);
 }
 }
 } else if (b.placed == false && dragging && b == selected) {
-for (let h = 0; h < blockLib[b.Id].length; h++) {
-for (let w = 0; w < blockLib[b.Id][0].length; w++) {
-if (blockLib[b.Id][h][w] == true) {
+for (let h = 0; h < shape.length; h++) {
+for (let w = 0; w < shape[0].length; w++) {
+if (shape[h][w] == true) {
 let y = b.y - b.Height / 2 + h * blockSize;
 let x = b.x - b.Width / 2 + w * blockSize;
 ctx.fillRect(x, y, blockSize, blockSize);
