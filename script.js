@@ -133,6 +133,12 @@ const buttons = [
         action: function () {
             state = 0;
             score = 0;
+            for (let y = 0; y < 8; y++) {
+                for (let x = 0; x < 8; x++) {
+                    grid[y][x] = 0;
+                }
+            }
+            placeCount = 3;
         },
         State: 2,
     },
