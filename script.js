@@ -339,8 +339,8 @@ function checkLoose(b) {
                 }
             }
         }
-        return true;
     });
+    return true;
 }
 
 function update(dt) {
