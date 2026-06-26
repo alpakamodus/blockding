@@ -1,4 +1,4 @@
-const canvas = document.getElementById("myCanvas"); 
+const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
@@ -114,9 +114,9 @@ const blockLib = [
 
 const buttons = [
     {
-        displayText: "Start",
+        displayText: "▸",
         color: "gray",
-        font: "60px Arial",
+        font: "80px Arial",
         x: canvas.width / 2 - boardSize / 2,
         y: canvas.height / 2 - boardSize / 4,
         w: boardSize,
@@ -171,11 +171,11 @@ const buttons = [
         State: 0,
     },
     {
-        displayText: "Return",
+        displayText: "↩",
         color: "gray",
         font: "50px Arial",
         x: canvas.width / 2 - boardSize / 4,
-        y: canvas.height * 0.85,
+        y: canvas.height * 0.75,
         w: boardSize / 2,
         h: canvas.height * 0.08,
         action: function () {
