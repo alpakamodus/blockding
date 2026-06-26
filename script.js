@@ -331,97 +331,123 @@ function getShape(id, rotation, mirrored) {
 }
 
 function update(dt) {
-    if (placeCount >= 3) {
-        blocks.forEach((b) => {
-            b.x = b.homeX;
-            b.y = b.homeY;
-            b.placed = false;
-            b.Id = Math.floor(Math.random() * blockLib.length);
-            b.mirrored = Math.random() < 0.5;
-            b.rotation = Math.floor(Math.random() * 4);
-            const shape = getShape(b.Id, b.rotation, b.mirrored);
-            b.Height = shape.length * blockSize;
-            b.Width = shape[0].length * blockSize;
-        });
-        placeCount = 0;
+    if (state == 1) {
+        if (placeCount >= 3) {
+            blocks.forEach((b) => {
+                b.x = b.homeX;
+                b.y = b.homeY;
+                b.placed = false;
+                b.Id = Math.floor(Math.random() * blockLib.length);
+                b.mirrored = Math.random() < 0.5;
+                b.rotation = Math.floor(Math.random() * 4);
+                const shape = getShape(b.Id, b.rotation, b.mirrored);
+                b.Height = shape.length * blockSize;
+                b.Width = shape[0].length * blockSize;
+            });
+            placeCount = 0;
+        }
+        clearRows();
+        clearCols();
+
     }
-    clearRows();
-    clearCols();
+    else if (state == 0) {
+
+    }
 }
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //playing board outline
-    ctx.strokeStyle = "rgba(0, 0, 0, 1)";
-    ctx.lineWidth = 5;
-    ctx.strokeRect(boardX, boardY, boardSize, boardSize);
+    if (state == 1) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //playing board outline
+        ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+        ctx.lineWidth = 5;
+        ctx.strokeRect(boardX, boardY, boardSize, boardSize);
 
-    //playing board karo
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
-    ctx.lineWidth = 1;
-    for (let i = 1; i < 8; i++) {
-        ctx.beginPath();
-        ctx.moveTo(boardX + blockSize * i, boardY); // Startpunkt
-        ctx.lineTo(boardX + blockSize * i, boardY + boardSize); // Endpunkt
-        ctx.stroke();
+        //playing board karo
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 8; i++) {
+            ctx.beginPath();
+            ctx.moveTo(boardX + blockSize * i, boardY); // Startpunkt
+            ctx.lineTo(boardX + blockSize * i, boardY + boardSize); // Endpunkt
+            ctx.stroke();
 
-        ctx.beginPath();
-        ctx.moveTo(boardX, boardY + blockSize * i); // Startpunkt
-        ctx.lineTo(boardX + boardSize, boardY + blockSize * i); // Endpunkt
-        ctx.stroke();
-    }
-    //2nd board outline
-    ctx.strokeStyle = "rgba(0, 0, 0, 1)";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(board2X, board2Y, boardSize, boardSize / 3);
-
-    //blocks
-    ctx.fillStyle = "orange";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-    for (let y = 0; y < 8; y++) {
-        for (let x = 0; x < 8; x++) {
-            if (grid[y][x] == true) {
-                ctx.fillRect(
-                    boardX + x * blockSize,
-                    boardY + y * blockSize,
-                    blockSize,
-                    blockSize,
-                );
-                ctx.strokeRect(
-                    boardX + x * blockSize,
-                    boardY + y * blockSize,
-                    blockSize,
-                    blockSize,
-                );
-            }
+            ctx.beginPath();
+            ctx.moveTo(boardX, boardY + blockSize * i); // Startpunkt
+            ctx.lineTo(boardX + boardSize, boardY + blockSize * i); // Endpunkt
+            ctx.stroke();
         }
-    }
-    blocks.forEach((b) => {
-        const shape = getShape(b.Id, b.rotation, b.mirrored);
-        if (b.placed == false && (!dragging || b != selected)) {
-            for (let h = 0; h < shape.length; h++) {
-                for (let w = 0; w < shape[0].length; w++) {
-                    if (shape[h][w] == true) {
-                        let y = b.y - b.Height / 4 + h * (blockSize / 2);
-                        let x = b.x - b.Width / 4 + w * (blockSize / 2);
-                        ctx.fillRect(x, y, blockSize / 2, blockSize / 2);
-                        ctx.strokeRect(x, y, blockSize / 2, blockSize / 2);
-                    }
-                }
-            }
-        } else if (b.placed == false && dragging && b == selected) {
-            for (let h = 0; h < shape.length; h++) {
-                for (let w = 0; w < shape[0].length; w++) {
-                    if (shape[h][w] == true) {
-                        let y = b.y - b.Height / 2 + h * blockSize;
-                        let x = b.x - b.Width / 2 + w * blockSize;
-                        ctx.fillRect(x, y, blockSize, blockSize);
-                        ctx.strokeRect(x, y, blockSize, blockSize);
-                    }
+        //2nd board outline
+        ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(board2X, board2Y, boardSize, boardSize / 3);
+
+        //blocks
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        for (let y = 0; y < 8; y++) {
+            for (let x = 0; x < 8; x++) {
+                if (grid[y][x] == true) {
+                    ctx.fillRect(
+                        boardX + x * blockSize,
+                        boardY + y * blockSize,
+                        blockSize,
+                        blockSize,
+                    );
+                    ctx.strokeRect(
+                        boardX + x * blockSize,
+                        boardY + y * blockSize,
+                        blockSize,
+                        blockSize,
+                    );
                 }
             }
         }
-    });
+        blocks.forEach((b) => {
+            const shape = getShape(b.Id, b.rotation, b.mirrored);
+            if (b.placed == false && (!dragging || b != selected)) {
+                for (let h = 0; h < shape.length; h++) {
+                    for (let w = 0; w < shape[0].length; w++) {
+                        if (shape[h][w] == true) {
+                            let y = b.y - b.Height / 4 + h * (blockSize / 2);
+                            let x = b.x - b.Width / 4 + w * (blockSize / 2);
+                            ctx.fillRect(x, y, blockSize / 2, blockSize / 2);
+                            ctx.strokeRect(x, y, blockSize / 2, blockSize / 2);
+                        }
+                    }
+                }
+            } else if (b.placed == false && dragging && b == selected) {
+                for (let h = 0; h < shape.length; h++) {
+                    for (let w = 0; w < shape[0].length; w++) {
+                        if (shape[h][w] == true) {
+                            let y = b.y - b.Height / 2 + h * blockSize;
+                            let x = b.x - b.Width / 2 + w * blockSize;
+                            ctx.fillRect(x, y, blockSize, blockSize);
+                            ctx.strokeRect(x, y, blockSize, blockSize);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    else if (state == 0) {
+        buttons.forEach((but) => {
+            if (but.State == 0) {
+                ctx.beginPath();
+                ctx.roundRect(but.x, but.y, but.w, but.h, 20);
+                ctx.fillStyle = "black";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.fillStyle = but.color;
+                ctx.fill();
+
+                ctx.fillStyle = "black";
+                ctx.font = but.font;
+
+                ctx.fillText(but.displayText, but.x + but.w / 2, but.y + but.h / 2 + 2);
+            }
+        });
+    }
 }
 
 function gameLoop() {
