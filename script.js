@@ -111,7 +111,7 @@ const blockLib = [
 const buttons = [
     {
         displayText: "Start",
-        color: "light blue",
+        color: "gray",
         font: "60px Arial",
         x: canvas.width / 2 - boardSize / 2,
         y: canvas.height / 2 - boardSize / 4,
@@ -124,7 +124,7 @@ const buttons = [
     },
     {
         displayText: "Home",
-        color: "light blue",
+        color: "gray",
         font: "60px Arial",
         x: canvas.width / 2 - boardSize / 2,
         y: canvas.height / 2 - boardSize / 4,
@@ -506,9 +506,9 @@ function draw() {
                 ctx.fillText(but.displayText, but.x + but.w / 2, but.y + but.h / 2 + 2);
             }
         });
-        ctx.font = "30px";
-        ctx.fillText("Score: " + score, buttons[0].x - buttons[0].x / 2, buttons[0].y - buttons[0].y / 2);
-        ctx.fillText("Highscore: " + score, buttons[0].x - buttons[0].x / 4, buttons[0].y - buttons[0].y / 4);
+        ctx.font = "30px Arial";
+        ctx.fillText("Score: " + score, canvas.width / 2, buttons[0].y - buttons[0].y / 2);
+        ctx.fillText("Highscore: " + score, canvas.width / 2, buttons[0].y - buttons[0].y / 4);
     }
 }
 
