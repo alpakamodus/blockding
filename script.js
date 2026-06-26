@@ -109,8 +109,8 @@ const blockLib = [
 const buttons = [
     {
         displayText: "Start",
-        color: "yellow",
-        font: "28px Arial",
+        color: "blue",
+        font: "40px Arial",
         x: canvas.width / 2 - boardSize / 2,
         y: canvas.height / 2 - boardSize / 4,
         w: boardSize,
@@ -330,6 +330,19 @@ function getShape(id, rotation, mirrored) {
     return shape;
 }
 
+function checkLoose(b) {
+    blocks.forEach((b) => {
+        for (let y = 0; y < 8; y++) {
+            for (let x = 0; x < 8; x++) {
+                if (checkIfFree(b, x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    });
+}
+
 function update(dt) {
     if (state == 1) {
         if (placeCount >= 3) {
@@ -348,6 +361,9 @@ function update(dt) {
         }
         clearRows();
         clearCols();
+        if (checkLoose(b)) {
+            state = 0;
+        }
 
     }
     else if (state == 0) {
