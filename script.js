@@ -590,7 +590,7 @@ function draw() {
             { score: 10, text: "🛍 Einkaufsgutschein - 10 Punkte" },
             { score: 20, text: "🚗 Autoputzgutschein - 20 Punkte" },
             { score: 30, text: "🥞 Essensgutschein - 30 Punkte" },
-            { score: 50, text: "🧹 Hausputzgutschein Tag- 50 Punkte" }
+            { score: 50, text: "🧹 Hausputzgutschein - 50 Punkte" }
         ];
 
         const highscore = Number(localStorage.getItem("highscore"));
